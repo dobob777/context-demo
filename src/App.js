@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Dash from './components/Dash'
+import Add from './components/Add'
+import List from './components/List'
+import TodoContext from './context/TodoContext';
 
-function App() {
+const App = () => {
+  const [allD, setAllD] = useState([])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <BrowserRouter>
+        <TodoContext.Provider value={ { allD, setAllD } }>
+          <Routes>
+            <Route path='/' element={ <Dash /> } />
+            <Route path='/add' element={ <Add /> } />
+            <Route path='/list' element={ <List /> } />
+          </Routes>
+        </TodoContext.Provider>
+      </BrowserRouter>
+    </>
+  )
 }
 
-export default App;
+export default App
