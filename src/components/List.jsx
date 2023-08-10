@@ -1,26 +1,25 @@
 import React, { useContext } from 'react'
-import Todo from '../context/TodoContext'
-import { Link } from 'react-router-dom'
+import TodoContext from '../context/TodoContext'
+
 const List = () => {
-    const abc = useContext(Todo)
-    const list = abc.allD
+    const contextGet = useContext(TodoContext);
+
+    const deleteData = (id) => {
+        contextGet.setAllD(contextGet.allD.filter((ele, index) => index !== id))
+    }
     return (
-        <>
-            <center>
-                <ul>
-                    {
-                        list.map((ele, index) => {
-                            return (
-                                <li key={ index }>{ ele }</li>
-                            )
-                        })
-                    }
-                </ul>
-                <Link to={ '/' }>
-                    <button>Close</button>
-                </Link>
-            </center>
-        </>
+        <div>
+            {
+                contextGet.allD.map((ele, index) => {
+                    return (
+                        <div key={ index } style={ { display: "flex" } }>
+                            <p >{ ele }</p>
+                            <button onClick={ () => deleteData(index) }>Delete</button>
+                        </div>
+                    )
+                })
+            }
+        </div>
     )
 }
 

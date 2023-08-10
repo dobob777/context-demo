@@ -1,25 +1,24 @@
 import React, { useContext, useState } from 'react'
-import Todo from '../context/TodoContext'
-import { Link } from 'react-router-dom';
+import TodoContext from '../context/TodoContext'
 
 const Add = () => {
-    const [inputData, setInputData] = useState("");
-    const dataSave = useContext(Todo);
-    const ok = (e) => {
-        setInputData(e.target.value)
+    const contextGet = useContext(TodoContext);
+
+    const [name, setName] = useState("");
+
+    const setNameData = (e) => {
+        setName(e.target.value);
+    }
+    const saveData = () => {
+        contextGet.setAllD([...contextGet.allD, name])
+        setName("")
     }
 
-    const addData = () => {
-        dataSave.setAllD([...dataSave.allD, inputData])
-        setInputData("")
-    }
     return (
         <>
-            <input type="text" value={ inputData } onChange={ ok } />
-            <button onClick={ addData }>Add</button>
-            <Link to={ '/' }>
-                <button>Close</button>
-            </Link>
+            <input type="text" value={ name } onChange={ setNameData } />
+            <button onClick={ saveData }>Save</button>
+
         </>
     )
 }
